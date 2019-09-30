@@ -2,6 +2,7 @@ var path = require('path');
 var jwt = require('jsonwebtoken');
 var cookie = require('cookie');
 var crypto = require('crypto');
+var bodyParser = require('body-parser');
 
 var APP_DIR = path.join(__dirname, './app');
 var JWT_COOKIE_EXPIRY =  604800000; // 7 days
@@ -147,6 +148,9 @@ function appendTrailingSlash(req, res, next) {
 }
 
 function init(server, app, _log, redSettings) {
+  app.use(bodyParser.json());
+  app.use(bodyParser.urlencoded({ extended: true }));
+  
   log = _log;
 
   if (!usersConfig.appPath) {
